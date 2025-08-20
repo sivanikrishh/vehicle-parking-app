@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+    .container{
+      display:flex;
+      justify-content: space-between;
+      align-items:flex-start;
+      padding:20px
+    }
+    .left-side{
+      flex:1;
+      margin-right:20px;
+    }
+    .right-side{   
+      flex:1; 
+      text-align:right;
+      width: 80px;
+      margin-top: 30px;
+    }
+    .right-side img {
+      max-width: 120%;
+      height: auto;
+      margin-top: 50px;
+      border-radius: 8px;
+    }
+    .signup-box {
+      background-color:white;
+      border-radius: 50px;
+      padding: 10px;
+      box-shadow: 0 4px 20px rgba(255, 248, 248, 0.934);
+      width: 85%;
+      height: auto;
+      max-width: 500px;
+      margin-top: 40px;
+    }
+        
+    .welcome-text { 
+      margin-bottom: 30px;  
+      margin-left:100px;
+      margin-top: 10px;
+      font-size: 30px; 
+      color: #ff2739; 
+      font-family: "Playfair Display", serif;  
+    }
+    .text-center {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+    }
+     form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-label {
+      margin-bottom: 5px;
+    }
+    input, textarea {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      grid-column: span 2;
+      padding: 10px;
+      background-color: #ff2739;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: rgb(162, 203, 237);
+    }
+    .login-container {
+      margin-top: 10px;
+      text-align: center;
+      grid-column: span 2;
+    }
+    .login-link {
+      text-decoration: none;
+      color: rgb(34, 148, 248);
+      font-weight: bold;
+    }
+    .login-link:hover {
+      color: #dd4c4c;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="left-side">
+    <div class="welcome-text">Welcome to parkED</div>
+         <div class="signup-box">
+    <div class="text-center">Sign up</div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ messages[0] }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
+  {% endwith %}
+    <form action="/signup" method="POST">
+        <div class="form-group">
+            <label class="form-label" for="email">Email:</label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="fullname">Full name:</label>
+            <input type="text" id="fullname" name="fullname">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="password">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="pincode">Pincode:</label>
+            <input type="text" id="pincode" name="pincode">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="address">Address:</label>
+            <textarea id="address" name="address" rows="3"></textarea>
+        </div>
+
+        <button type="submit">register</button>
+
+    <div class="login-container">
+        Already did?  <a class="login-link" href="/login">login</a> 
+    </div>   
+</form>
+</div>
+    </div>
+    <div class="right-side">
+        <img src="/static/line by line.jpeg" alt="parking image">
+    </div>
+    </div>
+</body>
+</html>

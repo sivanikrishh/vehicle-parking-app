@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Parking Summary</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+    .navbar-brand{
+      font-size: 25px; 
+      font-family: "Playfair Display", serif;
+      color: #cc1616;
+      padding-top: 10px;
+    }
+    .navbar{
+      background-color: rgb(255, 253, 253);
+      font-style: bold;
+      border-bottom: 1px inset whitesmoke;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .nav-link{
+      color: rgb(34, 31, 100);
+      padding: 10px;
+      margin-right: 20px;
+      transition: all 0.2s ease-in-out;
+    }
+    .nav-link{
+      color: rgb(34, 31, 100);
+      padding: 0 0 10 10 px;
+      margin-right: 20px;
+      transition: all 0.2s ease-in-out;
+    }
+    .nav-link:hover {
+      color: rgb(0, 75, 140);
+      transform: scale(1.1); }
+    .welcome{
+      font-size: large;
+      font-size: 30px; 
+      color: #cc1616;
+      margin-bottom: 20px;
+    }
+    #activityChart {
+      max-width: 100%;
+      max-height: 500px;
+    }
+    .section-heading{
+      margin-bottom: 30px;
+      margin-top: 20px;
+      color: rgb(25, 27, 82);
+      font-family: "Playfair Display", serif;
+    }
+ </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-opacity-10 p-1">
+        <div class="container-fluid">
+            <div class="navbar-brand text-danger fw-bold"> parkED </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/user_dash">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/parking_history">History</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user_summary">Summary</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/edit_user_profile">Edit Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h2 class="text-center section-heading">Parking status</h2></div>
+    <div class="d-flex justify-content-center my-4">
+  <div class="card p-4 shadow" style="width: 1000px;">
+    <canvas id="activityChart" style="width: 100%; height: 400px;"></canvas>
+  </div>
+</div>
+    <script id="chart-data" type="application/json">
+  {{ data|tojson }}
+</script>
+
+<script>
+  const rawData = JSON.parse(document.getElementById('chart-data').textContent);
+  const chart = new Chart(document.getElementById('activityChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: rawData.dates,
+      datasets: [{
+        label: 'Parking Cost',
+        data: rawData.costs,
+        backgroundColor: 'lightgreen',
+        borderColor: 'darkgreen',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Cost (₹)' }
+        },
+        x: {
+          title: { display: true, text: 'Date' }
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+    .container{
+        display:flex;
+        justify-content: space-between;
+        align-items:flex-start;
+        padding:10px;
+    }
+    .left-side{
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-right: 30px;
+    }    
+    .right-side{
+        width: 55%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right:-40px;
+    }
+    .right-side img {
+        max-width: 120%;
+        height: auto;
+        margin-top: 50px;
+        border-radius: 8px;
+    }
+    .login-box{
+        background-color: white;
+        border-radius: 50px;
+        padding:50px;
+        box-shadow:0 4px 20px rgba(255, 249, 249, 0.934);
+        height: auto;
+        max-width: 400px;
+        margin-top: 30px;
+        margin-left: 50px;
+    }
+    .welcome-text {
+        margin-left:120px;
+        font-size: 30px; 
+        margin-top: 50px;
+        font-family: "Playfair Display", serif;
+        color: #ff2739;  
+    }
+    .text-center {
+        text-align: center;
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 80%;
+    }
+    .form-label {
+        margin-bottom: 5px;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+    }
+    input, textarea {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    textarea {
+        resize: vertical;
+    }
+    button {
+        padding: 10px;
+        background-color: #ff2739;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        grid-column: span 2;
+        width: 300px;
+        margin-top: 10px;;
+    }
+    button:hover {
+        background-color: rgb(162, 203, 237);
+    }
+    .register-container {
+        margin-top: 10px;
+        margin-left: 55px;
+        text-align: center;
+    }
+    .register-link {
+        text-decoration: none;
+        color: rgb(34, 148, 248);
+        font-weight: bold;
+    }
+    .register-link:hover {
+       color: #dd4c4c;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="left-side">
+    <div class="welcome-text">Welcome to parkED</div>
+    <div class="login-box">
+    <div class="text-center" style="color: rgb(7, 7, 52);">Log in</div>
+      {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ messages[0] }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
+  {% endwith %}
+    <form action="/login" method="post">
+        <div class="form-group">
+            <label class="form-label" for="email">Email:</label>
+            <input type="email" name="email">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="password">Password:</label>
+            <input type="password" name="password">
+        </div>
+        <button type="submit">login</button>
+    <div class="register-container">
+        New here? <a class="register-link" href="/signup">Register</a>
+    </div>
+    </form>
+    </div>
+    </div>
+    <div class="right-side">
+        <img src="/static/line by line.jpeg" alt="parking image">
+    </div>
+    </div>
+</body>
+</html>

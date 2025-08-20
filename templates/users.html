@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Users</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+.navbar-brand{
+  font-size: 25px;
+  font-family: "Playfair Display", serif;
+  color: #cc1616;
+  padding-top: 10px;
+}
+.navbar{
+  background-color: rgb(255, 253, 253);
+  font-style: bold;
+  border-bottom: 1px inset whitesmoke;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.nav-link{
+  color: rgb(8, 6, 37);
+  padding: 10px;
+  margin-right: 20px;
+  transition: all 0.2s ease-in-out;
+}
+.nav-link:hover {
+  color: rgb(0, 75, 140);
+  transform: scale(1.1); }
+.section-heading {
+  margin-bottom: 30px;
+  margin-top: 30px;
+  color: rgb(11, 26, 98);
+}
+.d-flex{
+  align-items: center;
+}
+</style>
+<body>
+  <nav class="navbar navbar-expand-lg bg-opacity-10 p-2">
+    <div class="container-fluid">
+      <span class="navbar-brand text-danger fw-bold">Welcome Admin</span>
+      <div class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="/admin">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin_summary">Summary</a></li>
+          <li class="nav-item"><a class="nav-link" href="/login">Logout</a></li>
+          <li class="nav-item"><a class="nav-link" href="/edit_admin_profile">Edit Profile</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h3 class="text-center section-heading">Registered Users</h3>
+    <form method="GET" action="{{ url_for('users') }}" class="d-flex mb-3 justify-content-center">
+    <input class="form-control me-2" type="search" name="query" placeholder="Search by ID or Email" value="{{ search_query }}" style="width: 300px;border-color: blue;">
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+</form>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>E-Mail</th>
+            <th>Full Name</th>
+            <th>Address</th>
+            <th>Pin Code</th>
+          </tr>
+        </thead>
+        <tbody>
+         {% for user in users %}
+  {% if user.email and user.name and user.address and user.pincode %}
+  <tr>
+    <td>{{ user.id }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.name }}</td>
+    <td>{{ user.address }}</td>
+    <td>{{ user.pincode }}</td>
+  </tr>
+  {% endif %}
+{% else %}
+  <tr>
+    <td colspan="5">No users found.</td>
+  </tr>
+{% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>

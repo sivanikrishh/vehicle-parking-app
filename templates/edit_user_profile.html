@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <style>
+    body {
+        background-image: url('/static/scattered.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 90vh;
+        opacity:95%;
+    }
+    .form-box {
+        height: 500px;
+        max-width: 800px;
+        max-height: 650px;
+        margin-left: 220px;
+        margin-top: 40px;
+        padding: 30px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        box-shadow: 0 0 10px rgba(237, 171, 171, 0.886);
+        background-color: rgb(255, 255, 255);
+    }
+    .form-box h4 {
+        color: rgb(218, 5, 5);
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 25px;
+    }
+    form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+         gap: 20px;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-label{
+        color: rgb(5, 5, 120);
+        font-size: large;
+        padding: 10px;
+    }
+    input,textarea{
+        border-radius: 10px;
+        border: 1px solid #c7c2c2;
+        padding: 12px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    input:focus, textarea:focus{
+        border-color: #0d6efd; 
+        box-shadow: 0 0 5px rgba(13, 110, 253, 0.25);
+        outline: none;
+    }
+    .btn {
+        border-radius: 10px;
+        padding: 10px 20px;
+        min-width: 120px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .btn-primary {
+        background-color: #4a90e2;
+        border: none;
+        color: white;
+    }
+    .btn-primary:hover{
+        background-color: #0d6efd;
+    }
+    .btn-secondary {
+        background-color: #ff2a2a;
+        border: none;
+        color: white;
+        padding: 14px 6px 10px 6px;
+        text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5d0808;
+    }
+    .button-row {
+        grid-column: span 2;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+    <h4>Edit profile</h4>
+    <form action="/edit_user_profile" method="POST">
+        <div class="form-group">
+            <label class="form-label" for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{user.email}}">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="pincode">Pincode:</label>
+            <input type="text" id="pincode" name="pincode" value="{{user.pincode}}">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="fullname">Full name:</label>
+            <input type="text" id="fullname" name="fullname" value="{{user.name}}">
+        </div>
+          <div class="form-group">
+            <label class="form-label" for="address">Address:</label>
+            <input type="text" id="address" name="address" row="3" value="{{user.address}}">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="password">Password:</label>
+            <input type="text" id="password" name="password" value="{{user.password}}">
+        </div>
+        <div class="button-row">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                    <a href="{{url_for('user_dash')}}" class="btn btn-secondary">Cancel</a>
+                </div>
+</form>
+</div>
+</div>
+</body>
+</html>

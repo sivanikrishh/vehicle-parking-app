@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+    .navbar-brand{
+        font-size: 25px; 
+        font-family: "Playfair Display", serif;
+        color: #cc1616;
+        padding-top: 10px;
+    }
+    .user{
+        color: rgb(8, 8, 90);
+        padding-bottom: 30px;
+        font-family: "Playfair Display", serif;
+         font-size: 30px;
+    }
+    .navbar{
+        background-color: rgb(255, 253, 253);
+        font-style: bold;
+        border-bottom: 1px inset whitesmoke;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .nav-link{
+        color: rgb(34, 31, 100);
+        padding: 10px;
+        margin-right: 20px;
+        transition: all 0.2s ease-in-out;
+    }
+    .nav-link{
+        color: rgb(34, 31, 100);
+        padding: 0 0 10 10 px;
+        margin-right: 20px;
+        transition: all 0.2s ease-in-out;
+    }
+    .nav-link:hover {
+        color: rgb(0, 75, 140);
+        transform: scale(1.1); }
+    .search-section{
+        text-align: center;
+        margin-bottom: 30px;
+        margin-left: 270px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        border: 1px solid #ccc;
+        padding: 12px;
+        text-align: center;
+    }
+    th {
+        background-color: #f4f5e1;
+    }
+    .button-primary{
+        color: white;
+        background-color: rgb(255, 106, 106);
+    }
+    .button-primary:hover{
+        background-color: #ff2525;
+        color: white;
+    }
+        </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-opacity-10 p-1">
+        <div class="container-fluid">
+            <div class="navbar-brand text-danger fw-bold"> parkED </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/user_dash">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/parking_history">History</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user_summary">Summary</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/edit_user_profile">Edit Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+            <div class="container mt-4">
+        <h2 class="user text-center">Recent Parking History</h2>
+        {% with messages = get_flashed_messages() %} 
+  {% if messages %}
+    <div class="container mt-3"> 
+      {% for message in messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Vehicle No</th>
+                <th>Timestamp</th>
+                <th>Cost</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+{% for reserve in reservations %}
+<tr>
+    <td>{{ reserve.id }}</td>
+    <td>{{ reserve.spot.lot.prime_location_name }}</td>
+    <td>{{ reserve.vehicle_no }}</td>
+    <td>
+      {{ (reserve.parking_timestamp + timedelta(hours=5, minutes=30)).strftime('%Y-%m-%d %H:%M:%S') }}
+      -
+      {% if reserve.leaving_timestamp %}
+        {{ (reserve.leaving_timestamp + timedelta(hours=5, minutes=30)).strftime('%Y-%m-%d %H:%M:%S') }}
+      {% else %}
+        Still Parked
+      {% endif %}
+      <td>₹ {{reserve.parking_cost }}</td>
+      <td>
+          {% if not reserve.leaving_timestamp %}
+              <a href="{{ url_for('release_spot', reservation_id=reserve.id) }}" class="btn button-primary">Release</a>
+          {% else %}
+              <span class="btn btn-success">Parked Out</span>
+          {% endif %}
+      </td>
+  </tr>
+  {% endfor %}
+</tbody>
+
+        </table>
+        </div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dash</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+    .navbar-brand{
+      font-size: 25px; 
+      font-family: "Playfair Display", serif;
+      color: #cc1616;
+      padding-top: 10px;
+    }
+    .navbar{
+      background-color: rgb(255, 253, 253);
+      font-style: bold;
+      border-bottom: 1px inset whitesmoke;
+    }
+    .nav-link{
+      color: rgb(34, 31, 100);
+      padding: 10px;
+      margin-right: 20px;
+      transition: all 0.2s ease-in-out;
+    }
+    .nav-link:hover {
+      color: rgb(0, 75, 140);
+      transform: scale(1.1); }
+    .lot-card {
+      border: 2px solid #ff5858;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px;
+    }
+    .spot {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      margin: 3px;
+      text-align: center;
+      line-height: 30px;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+    .available {
+      background-color: #216a85;
+      color: white;
+    }
+    .occupied {
+      background-color: #d34f4f;
+      color: white;
+    }
+    .btn-link{
+      margin-bottom: 4px;
+    }
+    .text-white{
+      padding-left: 10px;
+    }
+    .btn-light{
+      margin-right: 10px;
+    }
+    .btn-light:hover{
+      border-color: rgb(5, 135, 144);
+      background-color: #7faaff;
+    }
+    .d-flex{
+      margin-top: 30px;
+    }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-opacity-10 p-2">
+        <div class="container-fluid">
+            <span class="navbar-brand text-danger fw-bold">Welcome Admin</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/admin">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin_summary">Summary</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/edit_admin_profile">Edit Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</nav>
+
+{% with messages = get_flashed_messages() %} 
+  {% if messages %}
+    <div class="container mt-3"> 
+      {% for message in messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+   <div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center p-2 mb-4 rounded" style="background-color: #0b243f; height:70px ;">
+    <h3 class="text-white m-0">Parking Lots</h3>
+    <div class="search_area" style="padding-bottom: 10px;">
+    <form method="GET" action="{{ url_for('admin_dash') }}" class="d-flex mb-3">
+  <input class="form-control me-2" type="search" name="search_value" placeholder="Search by location or pincode" value="{{ request.args.get('search_value', '') }}">
+  <button class="btn btn-outline-primary" type="submit">Search</button></div>
+</form>
+    <a href="/add_lot" class="btn btn-light add-lot-btn">Add Lot +</a>
+  </div>
+{% if search_value %}
+  {% if lots %}
+    <div class="result text-info mb-3">
+      Showing results for: <strong>{{ search_value }}</strong>
+    </div>
+  {% else %}
+    <p class="text-danger">No results found for: <strong>{{ search_value }}</strong></p>
+  {% endif %}
+{% endif %}
+<div class="row">
+  {% for lot in lots %}
+  <div class="col-md-4">
+    <div class="lot-card">
+      <h5>Parking : {{ lot.prime_location_name }}</h5>
+      <a href="{{ url_for('edit_lot',lot_id=lot.id) }}">Edit</a> 
+      <form action="{{ url_for('delete_lot', lot_id=lot.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this lot?');">
+        <button type="submit" class="btn btn-link text-danger p-0" style="text-decoration: underline;">Delete</button>
+      </form>
+      <p class="text-success">Occupied: {{ lot.occupied_count }}/{{ lot.max_no_of_spots }}</p>
+      <div>
+        {% for spot in lot.spots %}
+        {% if spot.status == 'A' %}
+        <a href="{{ url_for('view_spot', spot_id=spot.id) }}">
+          <div class="spot available">A</div>
+        </a>
+        {% else %}
+        <a href="{{ url_for('view_occupied_spot', spot_id=spot.id) }}">
+          <div class="spot occupied">O</div>
+        </a>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</body>
+</html>
