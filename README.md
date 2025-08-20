@@ -8,16 +8,16 @@ This project provides a user-friendly platform for managing parking with two rol
 
 > Create and activate a virtual environment:
 
-pip install virtualenv  — install virtualenv in your system.
-python3 -m venv env-name – Windows
-To activate virtual env:
-                        For macos/linux – source {env-name}/bin/activate
+* pip install virtualenv 
+* python3 -m venv env-name :– Windows
+* To activate virtual env:
                         For Windows - .\{env-name}\scripts\activate
-To deactivate — deactivate
+                        For macos/linux – source {env-name}/bin/activate
+*To deactivate — deactivate
 
 > Commands for initial library needed for basic setup:
 
-pip install flask flask_sqlalchemy flask_login
+* pip install flask flask_sqlalchemy flask_login
 
 > Run the app:
 
