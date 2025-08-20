@@ -13,7 +13,7 @@ This project provides a user-friendly platform for managing parking with two rol
 * To activate virtual env:
   For Windows - .\{env-name}\scripts\activate
   For macos/linux – source {env-name}/bin/activate
-*To deactivate — deactivate
+* To deactivate — deactivate
 
 > Commands for initial library needed for basic setup:
 
