@@ -17,7 +17,7 @@ This project provides a user-friendly platform for managing parking with two rol
 
 > Commands for initial library needed for basic setup:
 
-* pip install flask flask_sqlalchemy flask_login
+* pip install flask flask_sqlalchemy 
 
 > Run the app:
 
