@@ -11,7 +11,7 @@ This project provides a user-friendly platform for managing parking with two rol
 * pip install virtualenv 
 * python3 -m venv env-name :– Windows
 * To activate virtual env:
-  For Windows - .\{env-name}\scripts\activate
+  For Windows - .\{env-name}\Scripts\activate
   For macos/linux – source {env-name}/bin/activate
 * To deactivate — deactivate
 
